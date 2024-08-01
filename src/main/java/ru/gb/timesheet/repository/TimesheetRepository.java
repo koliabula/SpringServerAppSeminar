@@ -41,4 +41,10 @@ public class TimesheetRepository {
       .ifPresent(timesheets::remove); // если нет - иногда посылают 404 Not Found
   }
 
+  public List<Timesheet> findByProjectId(Long projectId) {
+    return timesheets.stream()
+            .filter(it -> Objects.equals(it.getProjectId(), projectId))
+            .toList();
+  }
+
 }

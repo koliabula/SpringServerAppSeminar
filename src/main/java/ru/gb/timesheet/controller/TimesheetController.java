@@ -8,6 +8,7 @@ import ru.gb.timesheet.model.Timesheet;
 import ru.gb.timesheet.service.TimesheetService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -62,6 +63,11 @@ public class TimesheetController {
 
     // 204 No Content
     return ResponseEntity.noContent().build();
+  }
+
+  @ExceptionHandler(NoSuchElementException.class)
+  public ResponseEntity<?> handleNoSuchElementException(NoSuchElementException e) {
+    return ResponseEntity.notFound().build();
   }
 
 }

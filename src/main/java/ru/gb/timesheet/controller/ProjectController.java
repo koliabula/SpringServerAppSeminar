@@ -9,6 +9,7 @@ import ru.gb.timesheet.service.ProjectService;
 import ru.gb.timesheet.service.TimesheetService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -32,6 +33,15 @@ public class ProjectController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/timesheets")
+    public ResponseEntity<List<Timesheet>> getTimesheets(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(service.getTimesheets(id));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping // получить все

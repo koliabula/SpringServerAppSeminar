@@ -1,6 +1,6 @@
 package ru.gb.timesheet.hw;
 
-public class Homework {
+public class Homework1 {
 
   /**
    * 1. Повторить все, что на семниаре

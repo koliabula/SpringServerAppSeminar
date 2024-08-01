@@ -7,6 +7,7 @@ import ru.gb.timesheet.repository.TimesheetRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -32,18 +33,18 @@ public class TimesheetService {
 
   public Timesheet create(Timesheet timesheet) {
     // Проверяем существует ли проект с таким id
-
-    if (projectRepository.getAll()
-            .stream().
-            filter(project -> Objects.equals(project.getId(), timesheet.getProjectId()))
-            .findFirst()
-            .isPresent()) {
-        timesheet.setCreatedAt(java.time.LocalDate.now());
-        return timesheetRepository.create(timesheet);
+    if (Objects.isNull(timesheet.getProjectId())) {
+      throw new IllegalArgumentException("projectId must not be null");
     }
-    return null;
 
+    if (projectRepository.getById(timesheet.getProjectId()).isEmpty()) {
+      throw new NoSuchElementException("Project with id " + timesheet.getProjectId() + " does not exists");
+    }
+
+    timesheet.setCreatedAt(LocalDate.now());
+    return timesheetRepository.create(timesheet);
   }
+
 
   public void delete(Long id) {
     timesheetRepository.delete(id);

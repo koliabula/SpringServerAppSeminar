@@ -26,8 +26,8 @@ public class ProjectRepository {
     }
 
     public Project create(Project project) {
-        project.setId(sequence++);
-        project.setName("Project #" + sequence);
+        project.setId(sequence);
+        project.setName("Project #" + sequence++);
         projects.add(project);
 //        System.out.println(projects);
         return project;
